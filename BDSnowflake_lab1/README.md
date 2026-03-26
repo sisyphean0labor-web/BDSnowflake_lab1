@@ -2,10 +2,10 @@
 sudo docker-compose up -d
 sudo rm -rf pg_data
 
-#Проверка строк
+#Проверка строк  
 sudo docker exec -it bds_postgres psql -U admin -d bds_lab -c "SELECT COUNT(*) FROM mock_data_raw;"
 
-# Финальная роверка
+# Финальная роверка  
 #Подключиться к БД
 sudo docker exec -it bds_postgres psql -U admin -d bds_lab
 
@@ -18,7 +18,7 @@ UNION ALL SELECT 'dim_supplier', COUNT(*) FROM dim_supplier
 UNION ALL SELECT 'dim_date', COUNT(*) FROM dim_date
 UNION ALL SELECT 'fact_sales', COUNT(*) FROM fact_sales;
 
-#первые пять строк самой "проблемной" таблицы
+#первые пять строк самой "проблемной" таблицы  
 SELECT * FROM fact_sales LIMIT 5;
 _________________________________________________________________________________________
 
