@@ -1,32 +1,29 @@
 # Больше для себя, чем для читающего (0_0)
+--остановить докер и очистить данные
+cd ~/bds_lab1/BDSnowflake_lab1
+sudo docker-compose down -v
+sudo rm -rf pg_data
+mkdir pg_data
+
+--запустить контейнер
 sudo docker-compose up -d
 
-#Проверка строк   
+--Проверка строк
 sudo docker exec -it bds_postgres psql -U admin -d bds_lab -c "SELECT COUNT(*) FROM mock_data_raw;"
 
-# Финальная роверка  
-#Подключиться к БД  
-sudo docker exec -it bds_postgres psql -U admin -d bds_lab
-
-SELECT 'mock_data_raw' AS table_name, COUNT(*) FROM mock_data_raw
-UNION ALL SELECT 'dim_customer', COUNT(*) FROM dim_customer
+--проверка сырости
+sudo docker exec -it bds_postgres psql -U admin -d bds_lab -c "
+SELECT 'dim_customer' AS name, COUNT(*) FROM dim_customer
 UNION ALL SELECT 'dim_seller', COUNT(*) FROM dim_seller
 UNION ALL SELECT 'dim_product', COUNT(*) FROM dim_product
 UNION ALL SELECT 'dim_store', COUNT(*) FROM dim_store
 UNION ALL SELECT 'dim_supplier', COUNT(*) FROM dim_supplier
 UNION ALL SELECT 'dim_date', COUNT(*) FROM dim_date
 UNION ALL SELECT 'fact_sales', COUNT(*) FROM fact_sales;
+"
 
-#первые пять строк самой "проблемной" таблицы  
+#первые пять строк самой "проблемной" таблицы
 SELECT * FROM fact_sales LIMIT 5;
-
-
-
-
-
-
-
-  
 _________________________________________________________________________________________
 
 
